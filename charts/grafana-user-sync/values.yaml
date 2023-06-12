@@ -6,4 +6,4 @@ cron:
   schedule: "*/5 * * * 1-5" # Every 5 minutes Monday-Friday
 
 temp:
-  foo: 'bar'
+  foo: 'baz'
