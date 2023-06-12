@@ -11,7 +11,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.base_ref }}
           fetch-depth: 0
 
       - name: Git Version
@@ -25,4 +25,4 @@ jobs:
       - uses: thejeff77/action-push-tag@v1.0.0
         with:
           tag: ${{ steps.version.outputs.version }}
-          message: "${{ steps.version.outputs.version }} ${{ github.event.pull_request.number }} ${{ github.event.pull_request.title }}"
+          message: "${{ steps.version.outputs.version }}"
