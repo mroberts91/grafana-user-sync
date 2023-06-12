@@ -22,7 +22,7 @@ jobs:
             src:
               - 'src/**'
       - name: fail-without-changes
-        if: ${{ steps.changes.outputs.changes == 'true' }}
+        if: ${{ steps.changes.outputs.src == 'true' }}
         run: exit 1
 
   release-container:
