@@ -1,7 +1,8 @@
 name: Release Helm Chart
 on:
-  push:
-    tags: "v*.*.*"
+  pull_request:
+    types: closed
+    branches: 'main'
 jobs:
   release:
     permissions:
@@ -18,19 +19,10 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - uses: dorny/paths-filter@v2
-        id: changes
-        with:
-          filters: |
-            charts:
-              - 'charts/**'
-
       - name: Install Helm
-        if: steps.changes.outputs.charts == 'true'
         uses: azure/setup-helm@v3
 
       - name: Run chart-releaser
-        if: steps.changes.outputs.charts == 'true'
         uses: helm/chart-releaser-action@v1.5.0
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

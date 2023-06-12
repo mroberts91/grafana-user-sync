@@ -1,25 +1,36 @@
 name: Create Release
 on:
-  push:
-    tags: "v*.*.*"
+  pull_request:
+    types: closed
+    branches: 'main'
 
 jobs:
-  publish:
+  release:
     permissions:
       contents: write
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: grafana-user-sync
       DOCKERFILE_PATH: ./Dockerfile
     steps:
-      - name: Find tag
-        id: tag
-        uses: dawidd6/action-get-tag@v1
+      - name: Checkout Code
+        uses: actions/checkout@v3
         with:
-          strip_v: true
+          ref: ${{ github.base_ref }}
+          fetch-depth: 0
 
-      - name: echo tag
-        run: echo ${{steps.tag.outputs.tag}}
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}
 
       - name: 'ghcr login'
         uses: docker/login-action@v2
@@ -30,8 +41,8 @@ jobs:
 
       - name: 'Build Image'
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{steps.tag.outputs.tag}} -f ${{ env.DOCKERFILE_PATH }} .
-          docker push ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{steps.tag.outputs.tag}}
+          docker build -t ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{steps.tag_version.outputs.new_tag}} -f ${{ env.DOCKERFILE_PATH }} .
+          docker push ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{steps.tag_version.outputs.new_tag}}
 
       - name: Create Release
         id: create_release
