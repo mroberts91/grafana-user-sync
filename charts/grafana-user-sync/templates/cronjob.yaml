@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "grafana-user-sync.fullname" . }}
+  labels:
+    {{- include "grafana-user-sync.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.cron.schedule }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: {{ include "grafana-user-sync.fullname" . }}
+            image: {{ .Values.container.name }}:{{ .Values.container.tag }}
+            imagePullPolicy: IfNotPresent
+          restartPolicy: OnFailure
