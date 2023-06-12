@@ -1,6 +1,6 @@
 # grafana-user-sync
 
-[![License](https://img.shields.io/badge/License-MIT%202.0-blue.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 <!-- [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/)](https://artifacthub.io/packages/search?repo=grafana) -->
 
 The code is provided as-is with no warranties.
