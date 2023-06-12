@@ -19,7 +19,7 @@ helm repo add grafana-user-sync https://mroberts91.github.io/grafana-user-sync
 You can then run `helm search repo grafana-user-sync` to see the charts.
 
 <!-- Keep full URL links to repo files because this README syncs from main to gh-pages.  -->
-Chart documentation is available in [charts directory](https://github.com/mroberts91/grafana-user-sync/blob/main/charts/grafana/README.md).
+Chart documentation is available in [charts directory](https://github.com/mroberts91/grafana-user-sync/blob/main/charts/grafana-user-sync/README.md).
 
 ## License
 

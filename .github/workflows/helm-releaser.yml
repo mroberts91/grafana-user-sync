@@ -14,7 +14,12 @@ jobs:
         with:
           filters: |
             charts:
-              - 'charts/**
+              - 'charts/**'
+
+      - name: Configure Git
+        run: |
+          git config user.name "${{ github.repository_owner }}"
+          git config user.email "${{ github.repository_owner }}@users.noreply.github.com"
 
       - name: Install Helm
         if: steps.changes.outputs.charts == 'true'
@@ -27,4 +32,3 @@ jobs:
         uses: helm/chart-releaser-action@v1.5.0
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          CR_SKIP_EXISTING: true
