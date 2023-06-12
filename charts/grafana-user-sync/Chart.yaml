@@ -2,5 +2,5 @@ apiVersion: v2
 name: grafana-user-sync
 description: A Grafana Cron Utility to sync users from Main Org to other orgs
 type: application
-version: 0.1.4
+version: 0.1.5
 appVersion: 4.0.3
