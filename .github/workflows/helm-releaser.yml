@@ -16,6 +16,11 @@ jobs:
             charts:
               - 'charts/**'
 
+      - name: Configure Git
+        run: |
+          git config user.name "${{ github.repository_owner }}"
+          git config user.email "${{ github.repository_owner }}@users.noreply.github.com"
+
       - name: Install Helm
         if: steps.changes.outputs.charts == 'true'
         uses: azure/setup-helm@v3
