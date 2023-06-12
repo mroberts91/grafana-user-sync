@@ -1,17 +1,34 @@
+---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: {{ include "grafana-user-sync.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "grafana-user-sync.labels" . | nindent 4 }}
 spec:
-  schedule: {{ .Values.cron.schedule }}
+  schedule: {{ .Values.cron.schedule | quote }}
+  concurrencyPolicy: "Forbid"
   jobTemplate:
     spec:
       template:
+        metadata:
+          name: grafana-user-sync
         spec:
           containers:
-          - name: {{ include "grafana-user-sync.fullname" . }}
+          - name: grafana-user-sync
             image: {{ .Values.container.name }}:{{ .Values.container.tag }}
-            imagePullPolicy: IfNotPresent
-          restartPolicy: OnFailure
+            env:
+              - name: GRAFANA_SYNC_BASE_URL
+                value: {{ .Values.grafana.base_url | quote }}
+              - name: GRAFANA_SYNC_ADMIN_USERNAME
+                value: {{ .Values.grafana.admin_username | quote }}
+              - name: GRAFANA_SYNC_ADMIN_PASSWORD
+                value: {{ .Values.grafana.admin_password | quote }}
+              - name: GRAFANA_SYNC_ROOT_ORG_ID
+                value: {{ .Values.grafana.root_org_id | quote }}
+            resources:
+              requests:
+                cpu: "100m"
+                memory: "256Mi"
+          restartPolicy: "Never"

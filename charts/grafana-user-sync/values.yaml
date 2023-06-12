@@ -1,6 +1,12 @@
 container:
-  name: ghcr.io/mroberts91/grafana-user-sync
-  tag: v3.0.0
+  name: 'ghcr.io/mroberts91/grafana-user-sync'
+  tag: 'v4.0.3'
 
 cron:
   schedule: "*/5 * * * 1-5" # Every 5 minutes Monday-Friday
+
+grafana:
+  base_url: "http://grafana:3000"
+  admin_username: "admin"
+  admin_password: "123iAmAnAdmin"
+  root_org_id: "1"
