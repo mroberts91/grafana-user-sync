@@ -42,7 +42,7 @@ jobs:
           draft: true
 
       - name: Publish latest release
-        uses: logicoversnacks/actions-publish
+        uses: logicoversnacks/actions-publish@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
         with:
