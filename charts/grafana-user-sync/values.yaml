@@ -1,0 +1,6 @@
+container:
+  name: grafana-user-sync
+  tag: 0.0.1-alpha.1
+
+cron:
+  schedule: "*/20 * * * 1-5"
