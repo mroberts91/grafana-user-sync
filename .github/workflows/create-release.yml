@@ -5,12 +5,33 @@ on:
     branches: 'main'
 
 jobs:
-  release:
+  check-src-changes:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.base_ref }}
+          fetch-depth: 0
+
+      - uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            src:
+              - 'src/**'
+      - name: fail-without-changes
+        if: ${{ steps.changes.outputs.changes == 'true' }}
+        run: exit 1
+
+  release-container:
+    needs: check-src-changes
     permissions: write-all
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     env:
-      DOCKERFILE_PATH: ./Dockerfile
+      DOCKERFILE_PATH: ./src/Dockerfile
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -49,6 +70,17 @@ jobs:
           tag: ${{ steps.tag_version.outputs.new_tag }}
           name: Release ${{ steps.tag_version.outputs.new_tag }}
           body: ${{ steps.tag_version.outputs.changelog }}
+
+  chart-release:
+    if: github.event.pull_request.merged == true
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.base_ref }}
+          fetch-depth: 0
 
       - name: Configure Git
         run: |
