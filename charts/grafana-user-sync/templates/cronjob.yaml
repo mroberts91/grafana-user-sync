@@ -20,13 +20,13 @@ spec:
             image: {{ .Values.container.name }}:{{ .Values.container.tag }}
             env:
               - name: GRAFANA_SYNC_BASE_URL
-                value: {{ .Values.grafana.base_url }}
+                value: {{ .Values.grafana.base_url | quote }}
               - name: GRAFANA_SYNC_ADMIN_USERNAME
-                value: {{ .Values.grafana.admin_username }}
+                value: {{ .Values.grafana.admin_username | quote }}
               - name: GRAFANA_SYNC_ADMIN_PASSWORD
-                value: {{ .Values.grafana.admin_password }}
+                value: {{ .Values.grafana.admin_password | quote }}
               - name: GRAFANA_SYNC_ROOT_ORG_ID
-                value: {{ .Values.grafana.root_org_id }}
+                value: {{ .Values.grafana.root_org_id | quote }}
             resources:
               requests:
                 cpu: "100m"
