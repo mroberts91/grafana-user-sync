@@ -8,6 +8,8 @@ jobs:
   check-src-changes:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    outputs:
+      changes: steps.changes.outputs.changes
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -21,14 +23,11 @@ jobs:
           filters: |
             src:
               - 'src/**'
-      - name: fail-without-changes
-        if: ${{ steps.changes.outputs.changes == '[]' }}
-        run: exit 1
 
   release-container:
     needs: check-src-changes
+    if: ${{ needs.check-src-changes.outputs.changes != '[]' }}
     permissions: write-all
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     env:
       DOCKERFILE_PATH: ./src/Dockerfile
