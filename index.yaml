@@ -3,6 +3,16 @@ entries:
   grafana-user-sync:
   - apiVersion: v2
     appVersion: 3.0.0
+    created: "2023-06-12T05:21:07.858785332Z"
+    description: A Grafana Cron Utility to sync users from Main Org to other orgs
+    digest: 35bd7c3e023d18a448f026eafd203c3e49da500ac6b11f4a175b340a26b8052f
+    name: grafana-user-sync
+    type: application
+    urls:
+    - https://github.com/mroberts91/grafana-user-sync/releases/download/grafana-user-sync-0.1.1/grafana-user-sync-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 3.0.0
     created: "2023-06-12T04:52:28.894215391Z"
     description: A Grafana Cron Utility to sync users from Main Org to other orgs
     digest: b27b20ed8ad5d9aa072836b42a533d933d55b8d667e2863fb9aa8a469f4c4a87
@@ -11,4 +21,4 @@ entries:
     urls:
     - https://github.com/mroberts91/grafana-user-sync/releases/download/grafana-user-sync-0.1.0/grafana-user-sync-0.1.0.tgz
     version: 0.1.0
-generated: "2023-06-12T04:52:28.894220391Z"
+generated: "2023-06-12T05:21:07.858796332Z"
