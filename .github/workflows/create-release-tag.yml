@@ -25,4 +25,4 @@ jobs:
       - uses: thejeff77/action-push-tag@v1.0.0
         with:
           tag: ${{ steps.version.outputs.version }}
-          message: '${{ steps.version.outputs.version }}: PR #${{ github.event.pull_request.number }} ${{ github.event.pull_request.title }}'
+          message: "${{ steps.version.outputs.version }} ${{ github.event.pull_request.number }} ${{ github.event.pull_request.title }}"
