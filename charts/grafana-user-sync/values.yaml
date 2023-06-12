@@ -1,6 +1,6 @@
 container:
   name: ghcr.io/mroberts91/grafana-user-sync
-  tag: v1.0.0
+  tag: v3.0.0
 
 cron:
   schedule: "*/5 * * * 1-5" # Every 5 minutes Monday-Friday
